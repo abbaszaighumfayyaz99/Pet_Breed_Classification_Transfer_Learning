@@ -1,0 +1,10 @@
+# HW2 - Image Classification (Intel Mac, Python 3.11)
+# PyTorch 2.2.2 is the last release with Intel-macOS wheels.
+# It was built against NumPy 1.x, so NumPy must stay < 2.
+torch==2.2.2
+torchvision==0.17.2
+numpy==1.26.4
+scikit-learn==1.6.1
+matplotlib==3.9.4
+pandas==2.2.3
+tqdm==4.67.1

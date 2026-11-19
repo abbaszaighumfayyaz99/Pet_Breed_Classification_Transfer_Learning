@@ -1,0 +1,4 @@
+data/
+results/features_*.npy
+__pycache__/
+.DS_Store
