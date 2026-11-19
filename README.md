@@ -35,7 +35,7 @@ test predictions find all pairwise differences significant (p < 0.05) except hea
 ## Repository structure
 
 ```
-Homework_2/
+Pet_Breed_Classification_Transfer_Learning/
 ├── src/
 │   ├── download_data.py     # download the dataset, print split sizes
 │   ├── explore_data.py      # images per breed in the official splits
@@ -103,7 +103,7 @@ Labels are the 37 breed categories (not the binary cat/dog labels).
 
 ## How to reproduce
 
-Run all commands from the `Homework_2` folder, in this order:
+Run all commands from the repository root (the folder containing `src/` and `README.md`), in this order:
 
 ```bash
 # 1. Data
@@ -133,6 +133,19 @@ python src/significance.py         # results/significance.csv
 Optional: `python src/inspect_model.py` prints the network structure and parameter counts.
 
 Note: training times in `summary.py` were copied from the terminal output of the runs above.
+
+### Quick check with the included checkpoints (no retraining, ~10 min)
+
+```bash
+python src/download_data.py        # dataset (~800 MB)
+python src/extract_features.py     # recreates results/features_*.npy (~1.5 min)
+python src/evaluate.py             # test metrics + confusion matrices from the saved checkpoints
+python src/summary.py              # results/summary_table.csv
+python src/significance.py         # results/significance.csv
+```
+
+`evaluate.py` and `summary.py` need the extracted feature files, which are not stored in the
+repository; `extract_features.py` recreates them in about 1.5 minutes.
 
 ## Data splits and preprocessing
 
