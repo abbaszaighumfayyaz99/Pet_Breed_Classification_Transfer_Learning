@@ -1,0 +1,7 @@
+model_a,model_b,only_a_correct,only_b_correct,p_value
+1_full_finetuning,2_head_training,193,282,5.1504262512703836e-05
+1_full_finetuning,3_features_logreg,157,299,2.810034738822238e-11
+1_full_finetuning,3_features_svm,250,306,0.019591690637401
+2_head_training,3_features_logreg,132,185,0.003428569437186256
+2_head_training,3_features_svm,248,215,0.13688535455560014
+3_features_logreg,3_features_svm,213,127,3.6008205358904095e-06

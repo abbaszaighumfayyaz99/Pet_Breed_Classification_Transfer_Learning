@@ -28,6 +28,10 @@ Times for approaches 1 and 2 cover all 15 epochs, including the validation pass 
 Time for approach 3 = feature extraction for all splits (84.1 s) + fitting the selected classifier.
 Full table: `results/summary_table.csv`.
 
+The 95 % confidence interval of each test accuracy is about ±1.2 points. Paired McNemar tests on the
+test predictions find all pairwise differences significant (p < 0.05) except head training vs Linear SVM
+(p = 0.14); see `results/significance.csv`. Each approach was trained once (one seed, one split).
+
 ## Repository structure
 
 ```
@@ -44,7 +48,8 @@ Homework_2/
 │   ├── evaluate.py          # single test-set evaluation of all selected models
 │   ├── error_analysis.py    # prediction examples and most confused breed pairs
 │   ├── plot_curves.py       # training / validation curves
-│   └── summary.py           # final results table
+│   ├── summary.py           # final results table
+│   └── significance.py      # 95% confidence intervals and McNemar tests
 ├── splits/                  # train_idx.txt, val_idx.txt (saved split)
 ├── checkpoints/             # selected models (.pt for PyTorch, .joblib for scikit-learn)
 ├── results/                 # metrics (.csv), figures (.png), test predictions (.npy)
@@ -122,6 +127,7 @@ python src/error_analysis.py --model 3_features_logreg
 python src/error_analysis.py --model 1_full_finetuning
 python src/plot_curves.py          # results/training_curves.png
 python src/summary.py              # results/summary_table.csv
+python src/significance.py         # results/significance.csv
 ```
 
 Optional: `python src/inspect_model.py` prints the network structure and parameter counts.
@@ -157,7 +163,8 @@ Model selection used the **validation set only** (best validation accuracy).
 | 3. Logistic Regression | scikit-learn model only | multinomial log-loss, L2 (lbfgs) | StandardScaler (fit on train), C ∈ {0.001, 0.01, 0.1, 1, 10}, max_iter 2000 | C = 0.01 | `checkpoints/sklearn_logreg.joblib` |
 | 3. Linear SVM | scikit-learn model only | squared hinge, L2 (liblinear, one-vs-rest) | StandardScaler (fit on train), C ∈ {0.001, 0.01, 0.1, 1, 10}, max_iter 5000 | C = 0.01 | `checkpoints/sklearn_svm.joblib` |
 
-In all cases the final ImageNet layer (1000 outputs) is replaced by a 37-output layer.
+For approaches 1 and 2 the final ImageNet layer (1000 outputs) is replaced by a 37-output layer;
+approach 3 uses the 576-dimensional output of global average pooling, before the classifier.
 Pre-trained weights: `torchvision.models.MobileNet_V3_Small_Weights.DEFAULT`
 (= `IMAGENET1K_V1`, file `mobilenet_v3_small-047dcff4.pth`, 67.7 % top-1 on ImageNet-1K).
 
